@@ -1,4 +1,4 @@
-import Decimal from "decimal.js";
+import { Decimal } from "decimal.js";
 import { addMoney, formatAmount, median, money, rateTable, toUsd, type Money, type RateTable } from "./money.js";
 
 export type SalaryFact = {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import Decimal from "decimal.js";
+import { Decimal } from "decimal.js";
 import { FX_RATES } from "./catalog.js";
 import { buildInsights, ratesFromCatalog, type SalaryFact } from "./insights.js";
 import { addMoney, money } from "./money.js";
