@@ -83,7 +83,12 @@ export function PeoplePage() {
   return (
     <>
       <p className="page-kicker">Directory</p>
-      <h1 className="page-title">People</h1>
+      <div className="page-head">
+        <h1 className="page-title">People</h1>
+        <a className="quiet" href="/api/export/employees.csv">
+          Export CSV
+        </a>
+      </div>
       <p className="lede">Find someone and open their salary. The list stays paged so 10,000 rows never land in the browser at once.</p>
       {error ? <p role="alert">{error}</p> : null}
       <div className="filters">

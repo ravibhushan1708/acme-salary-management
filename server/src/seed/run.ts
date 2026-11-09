@@ -9,10 +9,15 @@ const BATCH_SIZE = 500;
 
 async function main() {
   const prisma = new PrismaClient();
-  const employees = generateEmployees();
-  const passwordHash = hashPassword(hrPassword);
-
   try {
+    const ifEmpty = process.env.SEED_IF_EMPTY === "true";
+    if (ifEmpty && (await prisma.user.count()) > 0) {
+      console.log("Database already has an HR account. Leaving salaries in place.");
+      return;
+    }
+
+    const employees = generateEmployees();
+    const passwordHash = hashPassword(hrPassword);
     await prisma.$transaction(
       async (tx) => {
         await tx.salaryRevision.deleteMany();

@@ -105,6 +105,12 @@ Instructions given to the agent:
 
 The agent was not asked to invent extra personas, bands, or a chat feature. Review focus is the schema, the session check, and the insights math.
 
+Corrections during the build:
+
+- Decimal.js is imported as a named export so the Node TypeScript build sees the constructor.
+- Zod 4.6.7 is pinned because earlier 3.x and 4.x releases had an unbounded-input advisory. The schemas in this app are small, and the patched release is the one installed.
+- A browser pass changed one US salary by 10,000 and the home-screen USD total moved by 10,000.00. That check is the reason the comparison math is trusted beyond the unit fixture.
+
 ## Demo credentials
 
 Local and seeded deployments sign in as `hr@acme.test`. The password comes from `HR_PASSWORD` and defaults to `acme-hr-demo` so a reviewer can open the app. Change that password before any real employee data is loaded.
