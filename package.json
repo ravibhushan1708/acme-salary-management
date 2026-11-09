@@ -1,0 +1,23 @@
+{
+  "name": "acme-salary-management",
+  "private": true,
+  "workspaces": [
+    "server"
+  ],
+  "scripts": {
+    "db:push": "prisma db push",
+    "db:setup": "prisma db push && npm run seed -w server",
+    "seed": "npm run seed -w server",
+    "test": "npm test -w server",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "5.22.0"
+  },
+  "devDependencies": {
+    "prisma": "5.22.0"
+  },
+  "prisma": {
+    "seed": "npm run seed -w server"
+  }
+}

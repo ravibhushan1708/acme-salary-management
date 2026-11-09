@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  sessions     Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model FxRate {
+  currency   String   @id
+  usdPerUnit Decimal
+  asOf       DateTime
+}
+
+model Employee {
+  id             String           @id @default(cuid())
+  employeeNumber String           @unique
+  firstName      String
+  lastName       String
+  email          String           @unique
+  country        String
+  currency       String
+  department     String
+  jobTitle       String
+  jobLevel       String
+  annualSalary   Decimal
+  status         String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  revisions      SalaryRevision[]
+
+  @@index([country])
+  @@index([department])
+  @@index([jobLevel])
+  @@index([status])
+}
+
+model SalaryRevision {
+  id             String   @id @default(cuid())
+  employeeId     String
+  employee       Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  previousSalary Decimal
+  newSalary      Decimal
+  currency       String
+  createdAt      DateTime @default(now())
+
+  @@index([employeeId])
+}
