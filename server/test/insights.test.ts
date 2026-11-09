@@ -1,5 +1,4 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import request from "supertest";
 import { createTestContext, destroyTestContext, type TestContext } from "./helpers.js";
 
 let context: TestContext;
@@ -49,7 +48,7 @@ function person(
 
 describe("insights", () => {
   it("matches the hand-worked fixture and ignores inactive pay", async () => {
-    const response = await request(context.app).get("/api/insights");
+    const response = await context.agent.get("/api/insights");
     expect(response.status).toBe(200);
     expect(response.body.fxAsOf).toBe("2026-01-15");
     expect(response.body.headcount).toBe(4);
@@ -70,7 +69,7 @@ describe("insights", () => {
   });
 
   it("lists the highest and lowest paid people in a country", async () => {
-    const response = await request(context.app).get(
+    const response = await context.agent.get(
       `/api/insights/country/${encodeURIComponent("United States")}`,
     );
     expect(response.status).toBe(200);
@@ -89,7 +88,7 @@ describe("insights", () => {
   });
 
   it("returns 404 for a country outside the catalog", async () => {
-    const response = await request(context.app).get("/api/insights/country/Narnia");
+    const response = await context.agent.get("/api/insights/country/Narnia");
     expect(response.status).toBe(404);
   });
 });
